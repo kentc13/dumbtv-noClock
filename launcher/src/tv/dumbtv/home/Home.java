@@ -869,18 +869,23 @@ public final class Home extends Activity {
 
     private void tick() {
         String mode = cfg.get(Config.CLOCK);
-        boolean h24 = "24h".equals(mode) || "auto".equals(mode) && DateFormat.is24HourFormat(this);
-        Date now = new Date();
-        if (h24) {
-            clock.setText(DateFormat.format("HH:mm", now));
-        } else {
-            SpannableString half = new SpannableString(" " + DateFormat.format("a", now));
-            half.setSpan(new RelativeSizeSpan(0.36f), 0, half.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            clock.setText(DateFormat.format("h:mm", now));
-            clock.append(half);
+        boolean show = !"off".equals(mode);
+        clock.setVisibility(show ? View.VISIBLE : View.GONE);
+        date.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (show) {
+            boolean h24 = "24h".equals(mode) || "auto".equals(mode) && DateFormat.is24HourFormat(this);
+            Date now = new Date();
+            if (h24) {
+                clock.setText(DateFormat.format("HH:mm", now));
+            } else {
+                SpannableString half = new SpannableString(" " + DateFormat.format("a", now));
+                half.setSpan(new RelativeSizeSpan(0.36f), 0, half.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                clock.setText(DateFormat.format("h:mm", now));
+                clock.append(half);
+            }
+            Locale locale = Locale.getDefault();
+            date.setText(DateFormat.format(DateFormat.getBestDateTimePattern(locale, "EEEEdMMMM"), now));
         }
-        Locale locale = Locale.getDefault();
-        date.setText(DateFormat.format(DateFormat.getBestDateTimePattern(locale, "EEEEdMMMM"), now));
         if (meter.getVisibility() == View.VISIBLE) {
             meter.update((android.app.ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
         }

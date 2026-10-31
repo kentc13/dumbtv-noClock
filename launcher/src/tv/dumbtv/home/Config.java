@@ -72,8 +72,8 @@ final class Config {
             new String[] {"focus", "always", "never"},
             new String[] {"On focus", "Always", "Never"});
     static final Choice CLOCK = new Choice("clock", "Clock", "auto",
-            new String[] {"auto", "24h", "12h"},
-            new String[] {"System", "24-hour", "12-hour"});
+            new String[] {"auto", "24h", "12h", "off"},
+            new String[] {"System", "24-hour", "12-hour", "Off"});
     /** Free memory under the date, for TVs that are short of it. Shows only; frees nothing. */
     static final Choice MEMORY = new Choice("memory", "Memory meter", "off",
             new String[] {"off", "on"},
